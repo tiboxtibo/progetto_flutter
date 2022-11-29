@@ -18,8 +18,8 @@ class UserPage extends StatefulWidget {
 class UserPageState extends State<UserPage> {
   String username_utente;
   UserPageState(this.username_utente);
-  final urlPrenotazioni = "http://10.0.2.2:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
-  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServlet";
+  final urlPrenotazioni = "http://localhost:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
+  final urlEliminaPrenotazione = "http://localhost:8080/EsServlet_war_exploded/EliminaPrenotazioneServlet";
 
   var _postsJson = [];
 

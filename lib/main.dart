@@ -1,133 +1,211 @@
-
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import 'homePage.dart';
-import 'main.dart';
 
 void main() {
   runApp(const MaterialApp(
-    title: 'Login',
-    home: LoginPage(),
+    title: 'Navigation Basics',
+    home: MyApp(),
   ));
 }
 
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  LoginPageState createState() => LoginPageState();
+  _MyAppState createState() => _MyAppState();
 }
 
+class _MyAppState extends State<MyApp> {
 
-class LoginPageState extends State<LoginPage> {
-  final urlLogin = "http://10.0.2.2:8080/EsServlet_war_exploded/LoginServlet";
+  final urlLog = "http://localhost:8080/EsServlet_war_exploded/LoginServlet";
+  String username = "";
+  String password = "";
+  bool semaforo = false;
 
-  var username_utente = TextEditingController();
-  var password_utente = TextEditingController();
 
-
-  void postData(String username_utente,String password_utente) async {
+  // Put Function
+  void postData() async {
     try {
-      final response = await post(Uri.parse(urlLogin), body: {
-        "username_utente": username_utente,
-        "password_utente": password_utente,
+      final response = await post(Uri.parse(urlLog), body: {
+        "username_utente": username,
+        "password_utente": password,
       });
 
-      int ruolo= int.parse(response.body);
-      String username_utente_pass= username_utente;
+      print("Username: " + username);
+      print(" Password: "+ password);
+      int ruolo = int.parse(response.body);
+      print(ruolo);
 
-      if(ruolo==0){//pagina utente
-
-        Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage(username_utente_pass)));
-
+      if(ruolo == 0) {
+        print("true");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage(username)),
+        );
+      } else {
+        print("False");
       }
-      else{
-        print("Errore");
-      }
-
     } catch (er) {
     }
   }
-
+  // End Put Function
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0), // here the desired height
+        child: AppBar(
+          backgroundColor: Colors.grey[100],
+
+          shadowColor: Colors.grey[500],
+          title: Container(
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+            child: Image(
+              width: 150,
+              image: AssetImage('assets/Logo.png'),
+            ),
+          ),
+          centerTitle: true,
+        ),
+      ),
+
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+        ),
         child: Column(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(top: 60.0),
-              child: Center(
-
-              ),
-            ),
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                controller: username_utente,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Username',
-                    hintText: 'Enter a valid username'),
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const <Widget>[
+                  Center(
+                    child: Image(
+                      image: AssetImage('assets/image.png'),
+                    ),
+                  ),
+                ],
+              ),),
+            Expanded(child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60),
+                  ),
+                  boxShadow:[
+                    BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 10,
+                        blurRadius: 30,
+                        offset: Offset(0, -10)
+                    )
+                  ]
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                controller: password_utente,
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter your password'),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: ElevatedButton(
-                onPressed: () {
-
-                  print("username:" + username_utente.text);
-                  print("password:" + password_utente.text);
-
-                  postData(username_utente.text,password_utente.text);
-
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  children: <Widget>[
+                    const Text(
+                      "Bentornato",
+                      style: TextStyle(
+                          height: 2,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                          fontSize: 36
+                      ),
+                    ),
+                    const SizedBox(height: 40,),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          // Input Field User and Pass
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: "Username",
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[800],
+                                ),
+                                hintText: "Enter Username",
+                                fillColor: Colors.grey[100],
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                              ),
+                              onChanged: (String value) {
+                                username = value;
+                              },
+                              validator: (value) {
+                                return value!.isEmpty ? "Please enter Username" : null;
+                              },
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: "Username",
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[800],
+                                ),
+                                hintText: "Enter Username",
+                                fillColor: Colors.grey[100],
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                              ),
+                              onChanged: (String value) {
+                                password = value;
+                              },
+                              validator: (value) {
+                                return value!.isEmpty ? "Please enter Username" : null;
+                              },
+                            ),
+                          ),
+                          // Button
+                          Container(
+                            padding: const EdgeInsets.all(30),
+                            child: ElevatedButton(
+                              onPressed: postData,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+                                textStyle: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40), // <-- Radius
+                                ),
+                              ),
+                              child: const Text("Accedi"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 130,
-            ),
-            const Text('Progetto IUM-tweb 2022-2023')
+            ))
           ],
         ),
       ),
     );
   }
 
-
 }
-
-
