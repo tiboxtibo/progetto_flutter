@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  final urlLog = "http://localhost:8080/EsServlet_war_exploded/LoginServlet";
+  final urlLog = "http://10.0.2.2:8080/EsServlet_war_exploded/LoginServlet";
   String username = "";
   String password = "";
   bool semaforo = false;
@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                   ]
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: <Widget>[
                     const Text(
@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 36
                       ),
                     ),
-                    const SizedBox(height: 30,),
+                    const SizedBox(height: 20,),
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,

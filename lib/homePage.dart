@@ -23,8 +23,8 @@ class HomePageState extends State<HomePage> {
   static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
 
 
-  final url = "http://localhost:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
-  final urlPrenota = "http://localhost:8080/EsServlet_war_exploded/PrenotaServletFlutter";
+  final url = "http://10.0.2.2:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
+  final urlPrenota = "http://10.0.2.2:8080/EsServlet_war_exploded/PrenotaServletFlutter";
 
   var _postsJson = [];
 
