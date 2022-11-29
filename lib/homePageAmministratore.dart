@@ -10,17 +10,17 @@ import 'main.dart';
 
 
 
-class HomePage extends StatefulWidget {
+class HomePageAmministratore extends StatefulWidget {
   String username_utente;
-  HomePage(this.username_utente);
+  HomePageAmministratore(this.username_utente);
 
   @override
-  HomePageState createState() => HomePageState(this.username_utente);
+  HomePageAmministratoreState createState() => HomePageAmministratoreState(this.username_utente);
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageAmministratoreState extends State<HomePageAmministratore> {
   String username_utente;
-  HomePageState(this.username_utente);
+  HomePageAmministratoreState(this.username_utente);
 
   static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
 
@@ -32,28 +32,6 @@ class HomePageState extends State<HomePage> {
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
 
-
-  void postDataPrenota(String nome_corso,String username_docente,String giorno,int ora) async {
-
-    try {
-
-      String oraa= ora.toString();
-
-      final response = await post(Uri.parse(urlPrenota), body: {
-        "nome_corso": nome_corso,
-        "username_docente": username_docente,
-        "username_utente": username_utente,
-        "giorno": giorno,
-        "ora": oraa,
-      });
-
-      print(response.body);
-
-    } catch (er) {
-
-      print(er);
-    }
-  }
 
   void fetchPrenotazione() async {
 
@@ -102,21 +80,8 @@ class HomePageState extends State<HomePage> {
                         width: 350,
                         child: ElevatedButton(
                           onPressed: () {
-                            print("1234");
-
-                            String nome_corso=post["nome_corso"] as String;
-                            String username_docente=post["username_docente"] as String;
-                            //String username_utente="tiboxtibo";
-                            String giorno=post["giorno"] as String;
-                            int ora = post["ora"] as int;
-
-                            print(ora);
-
-                            postDataPrenota(nome_corso,username_docente,giorno,ora);
-                            fetchPrenotazione();
-
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Prenotazione Prenotata')));
+                                const SnackBar(content: Text('Accesso effettuato come Amministratore -> Non è possibile prenotare')));
                           },
                           child: Text("${post["nome_corso"]} | Docente: ${post["username_docente"]} \n  ${post["giorno"]} ${post["ora"]}:00",
                             textAlign: TextAlign.center,
@@ -172,14 +137,6 @@ class HomePageState extends State<HomePage> {
       ),
       body:
       _listViewBody(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => UserPage(username_utente)));
-        },
-        label: const Text('User Page'),
-        icon: const Icon(account_circle_sharp),
-        backgroundColor: Colors.pink,
-      ),
 
     );
   }

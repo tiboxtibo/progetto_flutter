@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import 'homePage.dart';
+import 'homePageAmministratore.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -39,13 +40,26 @@ class _MyAppState extends State<MyApp> {
       print(ruolo);
 
       if(ruolo == 0) {
-        print("true");
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => HomePage(username)),
         );
-      } else {
-        print("False");
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login Effettuato come Utente')));
+      }
+      else if(ruolo == 1) {
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePageAmministratore(username)),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login Effettuato com Amministratore')));
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Dati inseriti non corretti')));
       }
     } catch (er) {
     }
