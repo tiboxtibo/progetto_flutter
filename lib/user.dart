@@ -19,9 +19,9 @@ class UserPage extends StatefulWidget {
 class UserPageState extends State<UserPage> {
   String username_utente;
   UserPageState(this.username_utente);
-  final urlPrenotazioni = "http://10.0.2.2:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
-  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServletFlutter";
-  final urlConfermaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/ConfermaPrenotazioneServletFlutter";
+  final urlPrenotazioni = "http://localhost:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
+  final urlEliminaPrenotazione = "http://localhost:8080/EsServlet_war_exploded/EliminaPrenotazioneServletFlutter";
+  final urlConfermaPrenotazione = "http://localhost:8080/EsServlet_war_exploded/ConfermaPrenotazioneServletFlutter";
   var _postsJson = [];
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
@@ -103,64 +103,93 @@ class UserPageState extends State<UserPage> {
   }
 
   Widget _listViewBody() {
-    return ListView.builder(
-        itemCount : _postsJson.length,
-        itemBuilder: (context,i){
-          final post = _postsJson[i];
-          //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
-          return ElevatedButton(
-              onPressed: () {
-                if((post["stato_prenotazione"] as int)==-1){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Prenotazione già cancellata')));
-                  //print("prenotazione già cancellata");
-                }
-                if((post["stato_prenotazione"] as int)==1){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Prenotazione Confermata')));
-                  //print("prenotazione Confermata");
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          Expanded(
+              child: ListView.builder(
+                  itemCount : _postsJson.length,
+                  itemBuilder: (context,i){
+                    final post = _postsJson[i];
+                    //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 60,
+                          width: 350,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                if((post["stato_prenotazione"] as int)==-1){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Prenotazione già cancellata')));
+                                  //print("prenotazione già cancellata");
+                                }
+                                if((post["stato_prenotazione"] as int)==1){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Prenotazione Confermata')));
+                                  //print("prenotazione Confermata");
 
-                  String nome_corso=post["nome_corso"] as String;
-                  String username_docente=post["username_docente"] as String;
-                  //String username_utente="tiboxtibo";
-                  String giorno=post["giorno"] as String;
-                  int ora = post["ora"] as int;
-                  int id_prenotazione = post["id_prenotazione"] as int;
+                                  String nome_corso=post["nome_corso"] as String;
+                                  String username_docente=post["username_docente"] as String;
+                                  //String username_utente="tiboxtibo";
+                                  String giorno=post["giorno"] as String;
+                                  int ora = post["ora"] as int;
+                                  int id_prenotazione = post["id_prenotazione"] as int;
 
-                  postDataConfermaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
-                  fetchPrenotazioniPersonali();
-                }
-                if((post["stato_prenotazione"] as int)==0){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Prenotazione già Confermata')));
-                  //print("prenotazione già Confermata");
-                }
+                                  postDataConfermaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
+                                  fetchPrenotazioniPersonali();
+                                }
+                                if((post["stato_prenotazione"] as int)==0){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Prenotazione già Confermata')));
+                                  //print("prenotazione già Confermata");
+                                }
 
-              },
-              onLongPress: () {
+                              },
+                              onLongPress: () {
 
-                if((post["stato_prenotazione"] as int)==1){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Prenotazione Cancellata')));
+                                if((post["stato_prenotazione"] as int)==1){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Prenotazione Cancellata')));
 
-                  String nome_corso=post["nome_corso"] as String;
-                  String username_docente=post["username_docente"] as String;
-                  //String username_utente="tiboxtibo";
-                  String giorno=post["giorno"] as String;
-                  int ora = post["ora"] as int;
-                  int id_prenotazione = post["id_prenotazione"] as int;
+                                  String nome_corso=post["nome_corso"] as String;
+                                  String username_docente=post["username_docente"] as String;
+                                  //String username_utente="tiboxtibo";
+                                  String giorno=post["giorno"] as String;
+                                  int ora = post["ora"] as int;
+                                  int id_prenotazione = post["id_prenotazione"] as int;
 
 
-                  postDataCancellaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
-                  fetchPrenotazioniPersonali();
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: (post["stato_prenotazione"] as int==-1) ? Colors.red : ((post["stato_prenotazione"] as int==1) ? Colors.green : Colors.blue),
-              ),
-              child: Text("Nome corso: ${post["nome_corso"]} \nUsername docente: ${post["username_docente"]} \nGiorno: ${post["giorno"]} \nOra: ${post["ora"]}\nStato: ${post["stato_prenotazione"]}\n\n")
-          );
-        }
+                                  postDataCancellaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
+                                  fetchPrenotazioniPersonali();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40), // <-- Radius
+                                ),
+                                backgroundColor: (post["stato_prenotazione"] as int==-1) ? Colors.red[100] : ((post["stato_prenotazione"] as int==1) ? Colors.green[100] : Colors.grey[200]),
+                              ),
+                            child: Text("${post["nome_corso"]} | Docente: ${post["username_docente"]} \n  ${post["giorno"]} ${post["ora"]}:00",
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold
+                                ),),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        )
+                      ],
+                    );
+                  }
+              ))
+        ],
+      ),
     );
   }
 
