@@ -79,29 +79,65 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _listViewBody() {
-    return ListView.builder(
-        itemCount : _postsJson.length,
-        itemBuilder: (context,i){
-          final post = _postsJson[i];
-          //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
-          return ElevatedButton(
-              onPressed: () {
-                print("1234");
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount : _postsJson.length,
+                itemBuilder: (context,i){
+                  final post = _postsJson[i];
+                  //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        width: 350,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            print("1234");
 
-                String nome_corso=post["nome_corso"] as String;
-                String username_docente=post["username_docente"] as String;
-                //String username_utente="tiboxtibo";
-                String giorno=post["giorno"] as String;
-                int ora = post["ora"] as int;
+                            String nome_corso=post["nome_corso"] as String;
+                            String username_docente=post["username_docente"] as String;
+                            //String username_utente="tiboxtibo";
+                            String giorno=post["giorno"] as String;
+                            int ora = post["ora"] as int;
 
-                print(ora);
+                            print(ora);
 
-                postDataPrenota(nome_corso,username_docente,giorno,ora);
-                fetchPrenotazione();
-              },
-              child: Text("Nome corso: ${post["nome_corso"]} \nUsername docente: ${post["username_docente"]} \nGiorno: ${post["giorno"]} \nOra: ${post["ora"]}\n\n")
-          );
-        }
+                            postDataPrenota(nome_corso,username_docente,giorno,ora);
+                            fetchPrenotazione();
+                          },
+                          child: Text("${post["nome_corso"]} | Docente: ${post["username_docente"]} \n  ${post["giorno"]} ${post["ora"]}:00",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold
+                            ),),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[200],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40), // <-- Radius
+                            ),
+                          ),
+                        ),
+
+                      ),
+                      SizedBox(
+                        height: 15,
+                      )
+                    ],
+
+                  );
+                }
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -113,7 +149,8 @@ class HomePageState extends State<HomePage> {
         style: TextStyle(fontSize: 24),
       )
       ),
-      body: _listViewBody(),
+      body:
+      _listViewBody(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => UserPage(username_utente)));
