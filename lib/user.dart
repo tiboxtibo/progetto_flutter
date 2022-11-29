@@ -19,9 +19,9 @@ class UserPage extends StatefulWidget {
 class UserPageState extends State<UserPage> {
   String username_utente;
   UserPageState(this.username_utente);
-  final urlPrenotazioni = "http://localhost:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
-  final urlEliminaPrenotazione = "http://localhost:8080/EsServlet_war_exploded/EliminaPrenotazioneServletFlutter";
-  final urlConfermaPrenotazione = "http://localhost:8080/EsServlet_war_exploded/ConfermaPrenotazioneServletFlutter";
+  final urlPrenotazioni = "http://10.0.2.2:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
+  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServletFlutter";
+  final urlConfermaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/ConfermaPrenotazioneServletFlutter";
   var _postsJson = [];
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
