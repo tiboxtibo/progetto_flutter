@@ -4,124 +4,126 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:progetto_flutter_versione_00/user.dart';
 
+import 'homePage.dart';
+import 'main.dart';
 
-
-class HomePage extends StatefulWidget {
-  String username_utente;
-  HomePage(this.username_utente);
-
-  @override
-  HomePageState createState() => HomePageState(this.username_utente);
+void main() {
+  runApp(const MaterialApp(
+    title: 'Login',
+    home: LoginPage(),
+  ));
 }
 
-class HomePageState extends State<HomePage> {
-  String username_utente;
-  HomePageState(this.username_utente);
 
-  static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
-
-
-  final url = "http://10.0.2.2:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
-  final urlPrenota = "http://10.0.2.2:8080/EsServlet_war_exploded/PrenotaServletFlutter";
-  var _postsJson = [];
-
-
-  void postDataPrenota(String nome_corso,String username_docente,String giorno,int ora) async {
-    print("1");
-    try {
-      print("2");
-      String oraa= ora.toString();
-
-      final response = await post(Uri.parse(urlPrenota), body: {
-        "nome_corso": nome_corso,
-        "username_docente": username_docente,
-        "username_utente": username_utente,
-        "giorno": giorno,
-        "ora": oraa,
-      });
-      print("kkk");
-      print(response.body);
-
-    } catch (er) {
-      print("3");
-      print(er);
-    }
-  }
-
-  void fetchPrenotazione() async {
-
-    try{
-
-      final response = await get(Uri.parse(url));
-
-      final jsonData = jsonDecode(response.body) as List;
-
-
-      print("Prenotazioni prenotabili ricaricate");
-
-      setState(() {
-        _postsJson=jsonData;
-      });
-    }
-    catch(err){
-      print(err);
-    }
-
-  }
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    fetchPrenotazione();
+  LoginPageState createState() => LoginPageState();
+}
+
+
+class LoginPageState extends State<LoginPage> {
+  final urlLogin = "http://10.0.2.2:8080/EsServlet_war_exploded/LoginServlet";
+
+  var username_utente = TextEditingController();
+  var password_utente = TextEditingController();
+
+
+  void postData(String username_utente,String password_utente) async {
+    try {
+      final response = await post(Uri.parse(urlLogin), body: {
+        "username_utente": username_utente,
+        "password_utente": password_utente,
+      });
+
+      int ruolo= int.parse(response.body);
+      String username_utente_pass= username_utente;
+
+      if(ruolo==0){//pagina utente
+
+        Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage(username_utente_pass)));
+
+      }
+      else{
+        print("Errore");
+      }
+
+    } catch (er) {
+    }
   }
 
-  Widget _listViewBody() {
-    return ListView.builder(
-        itemCount : _postsJson.length,
-        itemBuilder: (context,i){
-          final post = _postsJson[i];
-          //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
-          return ElevatedButton(
-              onPressed: () {
-                print("1234");
-
-                String nome_corso=post["nome_corso"] as String;
-                String username_docente=post["username_docente"] as String;
-                //String username_utente="tiboxtibo";
-                String giorno=post["giorno"] as String;
-                int ora = post["ora"] as int;
-
-                print(ora);
-
-                postDataPrenota(nome_corso,username_docente,giorno,ora);
-                fetchPrenotazione();
-              },
-              child: Text("Nome corso: ${post["nome_corso"]} \nUsername docente: ${post["username_docente"]} \nGiorno: ${post["giorno"]} \nOra: ${post["ora"]}\n\n")
-          );
-        }
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(
-          "Benvenuto  " + username_utente,
-          style: TextStyle(fontSize: 24),
-        )
-        ),
-        body: _listViewBody(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => UserPage(username_utente)));
-        },
-        label: const Text('User Page'),
-        icon: const Icon(account_circle_sharp),
-        backgroundColor: Colors.pink,
-      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.only(top: 60.0),
+              child: Center(
 
+              ),
+            ),
+            Padding(
+              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                controller: username_utente,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Username',
+                    hintText: 'Enter a valid username'),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              //padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                controller: password_utente,
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    hintText: 'Enter your password'),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+              child: ElevatedButton(
+                onPressed: () {
+
+                  print("username:" + username_utente.text);
+                  print("password:" + password_utente.text);
+
+                  postData(username_utente.text,password_utente.text);
+
+                },
+                child: const Text(
+                  'Login',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const SizedBox(
+              height: 130,
+            ),
+            const Text('Progetto IUM-tweb 2022-2023')
+          ],
+        ),
+      ),
     );
   }
 

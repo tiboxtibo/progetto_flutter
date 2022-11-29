@@ -4,39 +4,43 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:progetto_flutter_versione_00/user.dart';
 
 
 
-class UserPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   String username_utente;
-  UserPage(this.username_utente);
+  HomePage(this.username_utente);
 
   @override
-  UserPageState createState() => UserPageState(this.username_utente);
+  HomePageState createState() => HomePageState(this.username_utente);
 }
 
-class UserPageState extends State<UserPage> {
+class HomePageState extends State<HomePage> {
   String username_utente;
-  UserPageState(this.username_utente);
-  final urlPrenotazioni = "http://10.0.2.2:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
-  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServlet";
+  HomePageState(this.username_utente);
+
+  static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
+
+
+  final url = "http://10.0.2.2:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
+  final urlPrenota = "http://10.0.2.2:8080/EsServlet_war_exploded/PrenotaServletFlutter";
 
   var _postsJson = [];
 
-  void postDataCancellaPrenotazione(String nome_corso,String username_docente,String giorno,int ora,int id_prenotazione) async {
-    print("11");
-    try {
-      print("22");
-      String oraa= ora.toString();
-      String id_prenotazionee= id_prenotazione.toString();
 
-      final response = await post(Uri.parse(urlEliminaPrenotazione), body: {
+  void postDataPrenota(String nome_corso,String username_docente,String giorno,int ora) async {
+    print("1");
+    try {
+      print("2");
+      String oraa= ora.toString();
+
+      final response = await post(Uri.parse(urlPrenota), body: {
         "nome_corso": nome_corso,
         "username_docente": username_docente,
         "username_utente": username_utente,
         "giorno": giorno,
         "ora": oraa,
-        "id_prenotazione":id_prenotazionee,
       });
       print("kkk");
       print(response.body);
@@ -47,17 +51,16 @@ class UserPageState extends State<UserPage> {
     }
   }
 
-  void fetchPrenotazioniPersonali() async {
+  void fetchPrenotazione() async {
 
     try{
 
-      final response = await post(Uri.parse(urlPrenotazioni), body: {
-        "username_utente": username_utente,
-      });
+      final response = await get(Uri.parse(url));
 
       final jsonData = jsonDecode(response.body) as List;
 
-      print("Prenotazioni personali ricaricate");
+
+      print("Prenotazioni prenotabili ricaricate");
 
       setState(() {
         _postsJson=jsonData;
@@ -68,10 +71,11 @@ class UserPageState extends State<UserPage> {
     }
 
   }
+
   @override
   void initState() {
     super.initState();
-    fetchPrenotazioniPersonali();
+    fetchPrenotazione();
   }
 
   Widget _listViewBody() {
@@ -82,7 +86,6 @@ class UserPageState extends State<UserPage> {
           //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
           return ElevatedButton(
               onPressed: () {
-
                 print("1234");
 
                 String nome_corso=post["nome_corso"] as String;
@@ -90,30 +93,35 @@ class UserPageState extends State<UserPage> {
                 //String username_utente="tiboxtibo";
                 String giorno=post["giorno"] as String;
                 int ora = post["ora"] as int;
-                int id_prenotazione = post["id_prenotazione"] as int;
 
+                print(ora);
 
-                postDataCancellaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
-                fetchPrenotazioniPersonali();
-
-
+                postDataPrenota(nome_corso,username_docente,giorno,ora);
+                fetchPrenotazione();
               },
-              child: Text("Nome corso: ${post["nome_corso"]} \nUsername docente: ${post["username_docente"]} \nGiorno: ${post["giorno"]} \nOra: ${post["ora"]}\nStato: ${post["stato_prenotazione"]}\n\n")
+              child: Text("Nome corso: ${post["nome_corso"]} \nUsername docente: ${post["username_docente"]} \nGiorno: ${post["giorno"]} \nOra: ${post["ora"]}\n\n")
           );
         }
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(
-        "Benvenuto nella user page " + username_utente,
+        "Benvenuto  " + username_utente,
         style: TextStyle(fontSize: 24),
       )
       ),
-      body:_listViewBody(),
+      body: _listViewBody(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => UserPage(username_utente)));
+        },
+        label: const Text('User Page'),
+        icon: const Icon(account_circle_sharp),
+        backgroundColor: Colors.pink,
+      ),
 
     );
   }
