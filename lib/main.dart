@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                   ]
               ),
               child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: <Widget>[
                     const Text(
@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                           fontSize: 36
                       ),
                     ),
-                    const SizedBox(height: 40,),
+                    const SizedBox(height: 30,),
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -158,11 +158,11 @@ class _MyAppState extends State<MyApp> {
                             child: TextFormField(
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
-                                labelText: "Username",
+                                labelText: "Passwrod",
                                 labelStyle: TextStyle(
                                   color: Colors.grey[800],
                                 ),
-                                hintText: "Enter Username",
+                                hintText: "Enter Password",
                                 fillColor: Colors.grey[100],
                                 filled: true,
                                 border: OutlineInputBorder(
@@ -173,13 +173,13 @@ class _MyAppState extends State<MyApp> {
                                 password = value;
                               },
                               validator: (value) {
-                                return value!.isEmpty ? "Please enter Username" : null;
+                                return value!.isEmpty ? "Please enter Password" : null;
                               },
                             ),
                           ),
                           // Button
                           Container(
-                            padding: const EdgeInsets.all(30),
+                            padding: const EdgeInsets.all(20),
                             child: ElevatedButton(
                               onPressed: postData,
                               style: ElevatedButton.styleFrom(
