@@ -19,7 +19,7 @@ class UserPageState extends State<UserPage> {
   String username_utente;
   UserPageState(this.username_utente);
   final urlPrenotazioni = "http://10.0.2.2:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
-  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServlet";
+  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServletFlutter";
 
   var _postsJson = [];
 
@@ -82,19 +82,22 @@ class UserPageState extends State<UserPage> {
           //return Text("Nome corso: ${post["nome_corso"]} \n Username utente: ${post["username_utente"]}\n\n");
           return ElevatedButton(
               onPressed: () {
+                if((post["stato_prenotazione"] as int)==-1){
+                  print("prenotazione già cancellata");
+                }
+                if((post["stato_prenotazione"] as int)==1){
+                  print("prenotazione cancellata");
+                  String nome_corso=post["nome_corso"] as String;
+                  String username_docente=post["username_docente"] as String;
+                  //String username_utente="tiboxtibo";
+                  String giorno=post["giorno"] as String;
+                  int ora = post["ora"] as int;
+                  int id_prenotazione = post["id_prenotazione"] as int;
 
-                print("1234");
 
-                String nome_corso=post["nome_corso"] as String;
-                String username_docente=post["username_docente"] as String;
-                //String username_utente="tiboxtibo";
-                String giorno=post["giorno"] as String;
-                int ora = post["ora"] as int;
-                int id_prenotazione = post["id_prenotazione"] as int;
-
-
-                postDataCancellaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
-                fetchPrenotazioniPersonali();
+                  postDataCancellaPrenotazione(nome_corso,username_docente,giorno,ora,id_prenotazione);
+                  fetchPrenotazioniPersonali();
+                }
 
 
               },
