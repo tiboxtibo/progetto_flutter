@@ -24,10 +24,13 @@ class HomePageState extends State<HomePage> {
   static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
 
 
-  final url = "http://localhost:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
-  final urlPrenota = "http://localhost:8080/EsServlet_war_exploded/PrenotaServletFlutter";
+  final urlUtente = "http://10.0.2.2:8080/EsServlet_war_exploded/UtenteServlet";
+
 
   var _postsJson = [];
+
+  String dispositivo= "flutter";
+  String userOperation= "";
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
 
@@ -38,12 +41,14 @@ class HomePageState extends State<HomePage> {
 
       String oraa= ora.toString();
 
-      final response = await post(Uri.parse(urlPrenota), body: {
+      final response = await post(Uri.parse(urlUtente), body: {
         "nome_corso": nome_corso,
         "username_docente": username_docente,
         "username_utente": username_utente,
         "giorno": giorno,
         "ora": oraa,
+        "dispositivo": dispositivo,
+        "userOperation": userOperation
       });
 
       print(response.body);
@@ -58,10 +63,13 @@ class HomePageState extends State<HomePage> {
 
     try{
 
-      final response = await get(Uri.parse(url));
+      final response = await post(Uri.parse(urlUtente), body: {
+        "username_utente": username_utente,
+        "dispositivo": dispositivo,
+        "userOperation": "prenotazioniDisponibili"
+      });
 
       final jsonData = jsonDecode(response.body) as List;
-
 
       print("Prenotazioni prenotabili ricaricate");
 
@@ -101,15 +109,16 @@ class HomePageState extends State<HomePage> {
                         width: 350,
                         child: ElevatedButton(
                           onPressed: () {
-                            print("1234");
+                            //print("1234");
 
                             String nome_corso=post["nome_corso"] as String;
                             String username_docente=post["username_docente"] as String;
                             //String username_utente="tiboxtibo";
                             String giorno=post["giorno"] as String;
                             int ora = post["ora"] as int;
+                            userOperation="prenota";
 
-                            print(ora);
+                            //print(ora);
 
                             postDataPrenota(nome_corso,username_docente,giorno,ora);
                             fetchPrenotazione();
@@ -191,6 +200,7 @@ class HomePageState extends State<HomePage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Logout'))
                       );
+
                     },
                   ),
                 )

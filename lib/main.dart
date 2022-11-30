@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import 'guestPage.dart';
 import 'homePage.dart';
 import 'homePageAmministratore.dart';
 
@@ -21,10 +22,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  final urlLog = "http://localhost:8080/EsServlet_war_exploded/LoginServlet";
+  final urlLog = "http://10.0.2.2:8080/EsServlet_war_exploded/LoginServlet";
   String username = "";
   String password = "";
   bool semaforo = false;
+
+  //serve per far capire alla servlet quale parte eseguire (se quella di flutter o quella del browser)
+  String dispositivo= "flutter";
 
 
   // Put Function
@@ -33,6 +37,7 @@ class _MyAppState extends State<MyApp> {
       final response = await post(Uri.parse(urlLog), body: {
         "username_utente": username,
         "password_utente": password,
+        "dispositivo": dispositivo,
       });
 
       print("Username: " + username);
@@ -58,9 +63,42 @@ class _MyAppState extends State<MyApp> {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login Effettuato com Amministratore')));
       }
+
       else {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Dati inseriti non corretti')));
+      }
+    } catch (er) {
+    }
+  }
+  // End Put Function
+
+  // Put Function
+  void postDataGuest() async {
+    try {
+      final response = await post(Uri.parse(urlLog), body: {
+        "username_utente": "guest",
+        "password_utente": "guest",
+        "dispositivo": dispositivo,
+      });
+
+      print("Username: " + username);
+      print(" Password: "+ password);
+      int ruolo = int.parse(response.body);
+      print(ruolo);
+
+      if(ruolo == 2) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => guestPage(username)),
+        );
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login Effettuato com Guest')));
+      }
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Errore')));
       }
     } catch (er) {
     }
@@ -95,7 +133,7 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const <Widget>[
@@ -208,6 +246,27 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               child: const Text("Accedi"),
+                            ),
+                          ),
+                          Container(//pulsante guest
+                            padding: const EdgeInsets.all(10),
+                            child: ElevatedButton(
+                              onPressed: postDataGuest,
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.red,
+                                backgroundColor: Colors.red[100],
+                                padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                                textStyle: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40), // <-- Radius
+                                ),
+
+                              ),
+
+                              child: const Text("Accedi come guest"),
                             ),
                           ),
                         ],

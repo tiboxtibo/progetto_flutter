@@ -23,10 +23,12 @@ class HomePageAmministratoreState extends State<HomePageAmministratore> {
   static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
 
 
-  final url = "http://localhost:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
-  final urlPrenota = "http://localhost:8080/EsServlet_war_exploded/PrenotaServletFlutter";
+  final urlUtente = "http://10.0.2.2:8080/EsServlet_war_exploded/UtenteServlet";
 
   var _postsJson = [];
+
+  String dispositivo= "flutter";
+  String userOperation= "";
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
 
@@ -35,10 +37,13 @@ class HomePageAmministratoreState extends State<HomePageAmministratore> {
 
     try{
 
-      final response = await get(Uri.parse(url));
+      final response = await post(Uri.parse(urlUtente), body: {
+        "username_utente": username_utente,
+        "dispositivo": dispositivo,
+        "userOperation": "prenotazioniDisponibili"
+      });
 
       final jsonData = jsonDecode(response.body) as List;
-
 
       print("Prenotazioni prenotabili ricaricate");
 
@@ -78,6 +83,7 @@ class HomePageAmministratoreState extends State<HomePageAmministratore> {
                         width: 350,
                         child: ElevatedButton(
                           onPressed: () {
+
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Accesso effettuato come Amministratore -> Non è possibile prenotare')));
                           },

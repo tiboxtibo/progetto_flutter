@@ -18,10 +18,12 @@ class UserPage extends StatefulWidget {
 class UserPageState extends State<UserPage> {
   String username_utente;
   UserPageState(this.username_utente);
-  final urlPrenotazioni = "http://10.0.2.2:8080/EsServlet_war_exploded/ListaPrenotazioniPersonaleServletFlutter";
-  final urlEliminaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/EliminaPrenotazioneServletFlutter";
-  final urlConfermaPrenotazione = "http://10.0.2.2:8080/EsServlet_war_exploded/ConfermaPrenotazioneServletFlutter";
+
+  final urlUtente = "http://10.0.2.2:8080/EsServlet_war_exploded/UtenteServlet";
   var _postsJson = [];
+
+  String dispositivo= "flutter";
+  String userOperation= "";
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
 
@@ -32,13 +34,15 @@ class UserPageState extends State<UserPage> {
       String oraa= ora.toString();
       String id_prenotazionee= id_prenotazione.toString();
 
-      final response = await post(Uri.parse(urlEliminaPrenotazione), body: {
+      final response = await post(Uri.parse(urlUtente), body: {
         "nome_corso": nome_corso,
         "username_docente": username_docente,
         "username_utente": username_utente,
         "giorno": giorno,
         "ora": oraa,
         "id_prenotazione":id_prenotazionee,
+        "dispositivo": dispositivo,
+        "userOperation": "eliminaPrenotazione"
       });
 
       print(response.body);
@@ -56,13 +60,15 @@ class UserPageState extends State<UserPage> {
       String oraa= ora.toString();
       String id_prenotazionee= id_prenotazione.toString();
 
-      final response = await post(Uri.parse(urlConfermaPrenotazione), body: {
+      final response = await post(Uri.parse(urlUtente), body: {
         "nome_corso": nome_corso,
         "username_docente": username_docente,
         "username_utente": username_utente,
         "giorno": giorno,
         "ora": oraa,
         "id_prenotazione":id_prenotazionee,
+        "dispositivo": dispositivo,
+        "userOperation": "confermaPrenotazione"
       });
 
 
@@ -78,8 +84,10 @@ class UserPageState extends State<UserPage> {
 
     try{
 
-      final response = await post(Uri.parse(urlPrenotazioni), body: {
+      final response = await post(Uri.parse(urlUtente), body: {
         "username_utente": username_utente,
+        "dispositivo": dispositivo,
+        "userOperation": "listaPrenotazioniPersonale"
       });
 
       final jsonData = jsonDecode(response.body) as List;
@@ -99,7 +107,10 @@ class UserPageState extends State<UserPage> {
   void initState() {
     super.initState();
     fetchPrenotazioniPersonali();
+
+
   }
+
 
   Widget _listViewBody() {
     return Container(
