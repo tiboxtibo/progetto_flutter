@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -25,8 +24,8 @@ class HomePageState extends State<HomePage> {
   static const IconData account_circle_sharp = IconData(0xe743, fontFamily: 'MaterialIcons');
 
 
-  final url = "http://10.0.2.2:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
-  final urlPrenota = "http://10.0.2.2:8080/EsServlet_war_exploded/PrenotaServletFlutter";
+  final url = "http://localhost:8080/EsServlet_war_exploded/Prenotazioni-Disponibili-Servlet";
+  final urlPrenota = "http://localhost:8080/EsServlet_war_exploded/PrenotaServletFlutter";
 
   var _postsJson = [];
 
@@ -86,7 +85,7 @@ class HomePageState extends State<HomePage> {
     return Container(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Expanded(
@@ -120,7 +119,7 @@ class HomePageState extends State<HomePage> {
                           },
                           child: Text("${post["nome_corso"]} | Docente: ${post["username_docente"]} \n  ${post["giorno"]} ${post["ora"]}:00",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold
@@ -134,7 +133,7 @@ class HomePageState extends State<HomePage> {
                         ),
 
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       )
                     ],
@@ -151,24 +150,52 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(
-        "Benvenuto  " + username_utente,
-        style: TextStyle(fontSize: 24),
-
-      ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(logout),
-              tooltip: 'Logout',
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                    MyApp()), (Route<dynamic> route) => false);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Logout'))
-                );
-              },
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: AppBar(
+            leading: GestureDetector(
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(10, 20, 0, 20),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 30,
+                  color: Colors.red,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              } ,
+            ) ,
+          backgroundColor: Colors.grey[100],
+          shadowColor: Colors.grey[500],
+          title: Text(
+            "Benvenuto  " + username_utente,
+              style: const TextStyle(
+                  fontSize: 18,
+                  height: 3,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+              ),
             ),
-          ]
+              actions: <Widget>[
+                Transform.scale(
+                  scale: 1.5,
+                  child: IconButton(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 20, 10),
+                    color: Colors.red,
+                    icon: const Icon(logout),
+                    tooltip: 'Logout',
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          const MyApp()), (Route<dynamic> route) => false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Logout'))
+                      );
+                    },
+                  ),
+                )
+              ]
+        ),
       ),
       body:
       _listViewBody(),

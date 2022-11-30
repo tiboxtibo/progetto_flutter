@@ -6,6 +6,7 @@ import 'homePageAmministratore.dart';
 
 void main() {
   runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: 'Navigation Basics',
     home: MyApp(),
   ));
@@ -20,7 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  final urlLog = "http://10.0.2.2:8080/EsServlet_war_exploded/LoginServlet";
+  final urlLog = "http://localhost:8080/EsServlet_war_exploded/LoginServlet";
   String username = "";
   String password = "";
   bool semaforo = false;
