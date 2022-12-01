@@ -85,7 +85,7 @@ class HomePageAmministratoreState extends State<HomePageAmministratore> {
                           onPressed: () {
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Accesso effettuato come Amministratore -> Non è possibile prenotare')));
+                                const SnackBar(duration: const Duration(seconds: 1),content: Text('Accesso effettuato come Amministratore -> Non è possibile prenotare')));
                           },
                           child: Text("${post["nome_corso"]} | Docente: ${post["username_docente"]} \n  ${post["giorno"]} ${post["ora"]}:00",
                             textAlign: TextAlign.center,
@@ -159,7 +159,7 @@ class HomePageAmministratoreState extends State<HomePageAmministratore> {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                     const MyApp()), (Route<dynamic> route) => false);
                     ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Logout'))
+                        const SnackBar(duration: const Duration(seconds: 1),content: Text('Logout'))
                     );
                   },
                 ),

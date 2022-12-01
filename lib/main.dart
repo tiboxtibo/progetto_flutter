@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
           MaterialPageRoute(builder: (context) => HomePage(username)),
         );
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login Effettuato come Utente')));
+            const SnackBar(duration: const Duration(seconds: 1),content: Text('Login Effettuato come Utente')));
       }
       else if(ruolo == 1) {
 
@@ -61,12 +61,12 @@ class _MyAppState extends State<MyApp> {
           MaterialPageRoute(builder: (context) => HomePageAmministratore(username)),
         );
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login Effettuato com Amministratore')));
+            const SnackBar(duration: const Duration(seconds: 1),content: Text('Login Effettuato come Amministratore')));
       }
 
       else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Dati inseriti non corretti')));
+            const SnackBar(duration: const Duration(seconds: 1),content: Text('Dati inseriti non corretti')));
       }
     } catch (er) {
     }
@@ -94,11 +94,11 @@ class _MyAppState extends State<MyApp> {
         );
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login Effettuato com Guest')));
+            const SnackBar(duration: const Duration(seconds: 1),content: Text('Login Effettuato come Guest')));
       }
       else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Errore')));
+            const SnackBar(duration: const Duration(seconds: 1),content: Text('Errore')));
       }
     } catch (er) {
     }
@@ -209,6 +209,7 @@ class _MyAppState extends State<MyApp> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
+                              obscureText: true,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 labelText: "Passwrod",
@@ -218,6 +219,7 @@ class _MyAppState extends State<MyApp> {
                                 hintText: "Enter Password",
                                 fillColor: Colors.grey[100],
                                 filled: true,
+
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(40),
                                 ),

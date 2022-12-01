@@ -124,7 +124,7 @@ class HomePageState extends State<HomePage> {
                             fetchPrenotazione();
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Prenotazione Prenotata')));
+                                const SnackBar(duration: const Duration(seconds: 1),content: Text('Prenotazione Prenotata')));
                           },
                           child: Text("${post["nome_corso"]} | Docente: ${post["username_docente"]} \n  ${post["giorno"]} ${post["ora"]}:00",
                             textAlign: TextAlign.center,
@@ -198,7 +198,7 @@ class HomePageState extends State<HomePage> {
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                           const MyApp()), (Route<dynamic> route) => false);
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Logout'))
+                          const SnackBar(duration: const Duration(seconds: 1),content: Text('Logout'))
                       );
 
                     },
@@ -212,6 +212,10 @@ class HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => UserPage(username_utente)));
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(duration: const Duration(seconds: 3),content: Text('Premi per confermare e tieni premuto per cancellare'))
+          );
+
         },
         label: const Text('User Page'),
         icon: const Icon(account_circle_sharp),

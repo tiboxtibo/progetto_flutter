@@ -134,12 +134,12 @@ class UserPageState extends State<UserPage> {
                               onPressed: () {
                                 if((post["stato_prenotazione"] as int)==-1){
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Prenotazione già cancellata')));
+                                      const SnackBar(duration: const Duration(seconds: 1),content: Text('Prenotazione già cancellata')));
                                   //print("prenotazione già cancellata");
                                 }
                                 if((post["stato_prenotazione"] as int)==1){
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Prenotazione Confermata')));
+                                      const SnackBar(duration: const Duration(seconds: 1),content: Text('Prenotazione Confermata')));
                                   //print("prenotazione Confermata");
 
                                   String nome_corso=post["nome_corso"] as String;
@@ -154,7 +154,7 @@ class UserPageState extends State<UserPage> {
                                 }
                                 if((post["stato_prenotazione"] as int)==0){
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Prenotazione già Confermata')));
+                                      const SnackBar(duration: const Duration(seconds: 1),content: Text('Prenotazione già Confermata')));
                                   //print("prenotazione già Confermata");
                                 }
 
@@ -163,7 +163,7 @@ class UserPageState extends State<UserPage> {
 
                                 if((post["stato_prenotazione"] as int)==1){
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Prenotazione Cancellata')));
+                                      const SnackBar(duration: const Duration(seconds: 1),content: Text('Prenotazione Cancellata')));
 
                                   String nome_corso=post["nome_corso"] as String;
                                   String username_docente=post["username_docente"] as String;
@@ -246,7 +246,7 @@ class UserPageState extends State<UserPage> {
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                     const MyApp()), (Route<dynamic> route) => false);
                     ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Logout'))
+                        const SnackBar(duration: const Duration(seconds: 1),content: Text('Logout'))
                     );
                   },
                 ),
