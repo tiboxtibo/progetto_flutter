@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:progetto_flutter_versione_00/main.dart';
 
 
-
+/** Pagina personale User */
 class UserPage extends StatefulWidget {
   String username_utente;
   UserPage(this.username_utente);
@@ -14,6 +14,7 @@ class UserPage extends StatefulWidget {
   @override
   UserPageState createState() => UserPageState(this.username_utente);
 }
+
 
 class UserPageState extends State<UserPage> {
   String username_utente;
@@ -27,6 +28,8 @@ class UserPageState extends State<UserPage> {
 
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
 
+  /** Si connette tramite Post alla servlet User nel progetto di tweb */
+  /** Cancella la prenotazione */
   void postDataCancellaPrenotazione(String nome_corso,String username_docente,String giorno,int ora,int id_prenotazione) async {
 
     try {
@@ -53,6 +56,8 @@ class UserPageState extends State<UserPage> {
     }
   }
 
+  /** Si connette tramite Post alla servlet User nel progetto di tweb */
+  /** Conferma la prenotazione */
   void postDataConfermaPrenotazione(String nome_corso,String username_docente,String giorno,int ora,int id_prenotazione) async {
 
     try {
@@ -72,7 +77,7 @@ class UserPageState extends State<UserPage> {
       });
 
 
-      print(response.body);
+      //print(response.body);
 
     } catch (er) {
 
@@ -80,6 +85,8 @@ class UserPageState extends State<UserPage> {
     }
   }
 
+  /** Si connette tramite Post alla servlet User nel progetto di tweb */
+  /** Visualizza l'elenco delle prenotazioni personali */
   void fetchPrenotazioniPersonali() async {
 
     try{
@@ -92,7 +99,7 @@ class UserPageState extends State<UserPage> {
 
       final jsonData = jsonDecode(response.body) as List;
 
-      print("Prenotazioni personali ricaricate");
+      //print("Prenotazioni personali ricaricate");
 
       setState(() {
         _postsJson=jsonData;
@@ -103,15 +110,16 @@ class UserPageState extends State<UserPage> {
     }
 
   }
+
+
+  /** Metodi caricati all'avvio della pagina */
   @override
   void initState() {
     super.initState();
     fetchPrenotazioniPersonali();
-
-
   }
 
-
+  /** Widget che visualizza la lista delle prenotazioni già effettuate, quelle cancellate e prenotate */
   Widget _listViewBody() {
     return Container(
       child: Column(

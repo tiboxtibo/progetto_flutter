@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 import 'main.dart';
 
 
-
+/** HomePage Amministratore */
 class HomePageAmministratore extends StatefulWidget {
   String username_utente;
   HomePageAmministratore(this.username_utente);
@@ -45,7 +45,7 @@ class HomePageAmministratoreState extends State<HomePageAmministratore> {
 
       final jsonData = jsonDecode(response.body) as List;
 
-      print("Prenotazioni prenotabili ricaricate");
+      //print("Prenotazioni prenotabili ricaricate");
 
       setState(() {
         _postsJson=jsonData;

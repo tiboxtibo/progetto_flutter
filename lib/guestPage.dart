@@ -1,13 +1,11 @@
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
 import 'main.dart';
 
 
-
+/** HomePage Utente */
 class guestPage extends StatefulWidget {
   String username_utente;
   guestPage(this.username_utente);
@@ -45,7 +43,7 @@ class guestPageState extends State<guestPage> {
 
       final jsonData = jsonDecode(response.body) as List;
 
-      print("Prenotazioni prenotabili ricaricate");
+      //print("Prenotazioni prenotabili ricaricate");
 
       setState(() {
         _postsJson=jsonData;

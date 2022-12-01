@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
 import 'guestPage.dart';
 import 'homePage.dart';
 import 'homePageAmministratore.dart';
 
+/** Login Amministratore -> da qui inizia l'applicazione */
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -31,6 +31,8 @@ class _MyAppState extends State<MyApp> {
   String dispositivo= "flutter";
 
 
+  /** Si connette tramite Post alla servlet Login nel progetto di tweb */
+  /** Effettua il login utente*/
   // Put Function
   void postData() async {
     try {
@@ -40,10 +42,10 @@ class _MyAppState extends State<MyApp> {
         "dispositivo": dispositivo,
       });
 
-      print("Username: " + username);
-      print(" Password: "+ password);
+      //print("Username: " + username);
+      //print(" Password: "+ password);
       int ruolo = int.parse(response.body);
-      print(ruolo);
+      //print(ruolo);
 
       if(ruolo == 0) {
 
@@ -73,6 +75,8 @@ class _MyAppState extends State<MyApp> {
   }
   // End Put Function
 
+  /** Si connette tramite Post alla servlet Login nel progetto di tweb */
+  /** Effettua il login guest*/
   // Put Function
   void postDataGuest() async {
     try {
@@ -82,10 +86,10 @@ class _MyAppState extends State<MyApp> {
         "dispositivo": dispositivo,
       });
 
-      print("Username: " + username);
-      print(" Password: "+ password);
+      //print("Username: " + username);
+      //print(" Password: "+ password);
       int ruolo = int.parse(response.body);
-      print(ruolo);
+      //print(ruolo);
 
       if(ruolo == 2) {
         Navigator.push(

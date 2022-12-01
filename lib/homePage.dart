@@ -1,14 +1,11 @@
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:progetto_flutter_versione_00/user.dart';
-
 import 'main.dart';
 
-
-
+/** HomePage Utente */
 class HomePage extends StatefulWidget {
   String username_utente;
   HomePage(this.username_utente);
@@ -35,6 +32,8 @@ class HomePageState extends State<HomePage> {
   static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
 
 
+  /** Si connette tramite Post alla servlet Utente nel progetto di tweb */
+  /** Prenota una prenotazione creata virtualmente e visualizzata a schermo come elenco di bottoni*/
   void postDataPrenota(String nome_corso,String username_docente,String giorno,int ora) async {
 
     try {
@@ -51,7 +50,7 @@ class HomePageState extends State<HomePage> {
         "userOperation": userOperation
       });
 
-      print(response.body);
+      //print(response.body);
 
     } catch (er) {
 
@@ -59,6 +58,8 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  /** Si connette tramite Post alla servlet Utente nel progetto di tweb */
+  /** Visualizza una lista virtutale di prenotazioni che possono essere effettuate*/
   void fetchPrenotazione() async {
 
     try{
@@ -71,7 +72,7 @@ class HomePageState extends State<HomePage> {
 
       final jsonData = jsonDecode(response.body) as List;
 
-      print("Prenotazioni prenotabili ricaricate");
+      //print("Prenotazioni prenotabili ricaricate");
 
       setState(() {
         _postsJson=jsonData;
@@ -83,12 +84,14 @@ class HomePageState extends State<HomePage> {
 
   }
 
+  /** Metodi caricati all'avvio della pagina */
   @override
   void initState() {
     super.initState();
     fetchPrenotazione();
   }
 
+  /** Widget che visualizza la lista delle prenotazioni che possono essere effettuate */
   Widget _listViewBody() {
     return Container(
       child: Column(
@@ -156,6 +159,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  /** Build dell'applicazione */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
