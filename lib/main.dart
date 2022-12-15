@@ -4,7 +4,7 @@ import 'guestPage.dart';
 import 'homePage.dart';
 import 'homePageAmministratore.dart';
 
-/** Login Amministratore -> da qui inizia l'applicazione */
+/** Login -> da qui inizia l'applicazione */
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,

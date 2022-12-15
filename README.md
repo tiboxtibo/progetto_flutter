@@ -1,10 +1,10 @@
 Progetto IUM-tweb(12 CFU) -- Parte di Android
 
-## Autori
+# Autori
 Matteo Tiboldo 
 Salvatore La Rosa
 
-## Getting Started
+# Getting Started
 Il progetto si avvia avviando il file main
 
 Ricorda di avviare prima:
@@ -13,14 +13,28 @@ Ricorda di avviare prima:
 3) Emulatore android
 4) Infine avviamo il main del progetto flutter
 
-##Ricorda
+# Ricorda
 Gli url su windosow:
     final urlUtente = "http://10.0.2.2:8080/EsServlet_war_exploded/UtenteServlet";
 
 Gli url su mac:
     final urlUtente = "http://localhost:8080/EsServlet_war_exploded/UtenteServlet";
+(se utilizziamo emulatore di sistema IOS)
 
-# consegna progetto
+# Spiegazione progetto
+
+Abbiamo creato un applicazione flutter collegandoci al server Tomcat e richiedendo i dati al 
+database MySql tramite le Servlet Java del progetto "https://github.com/tiboxtibo/progetto_tweb", 
+tale applicazione ci permette di eseguire il login come utente, amministratore o ospite
+![img.png](img.png)
+
+Prenotare le lezioni che risultano disponibili
+![img_1.png](img_1.png)
+
+e mediante l'accesso alla UserPage di cancellarle o di confermarle
+![img_2.png](img_2.png)
+
+# Consegna progetto
 Progetti laboratorio IUM e IUM/TWEB
 
 Progetto di laboratorio – IUM+TWEB – 2022/23 (insegnamento da 12 CFU)
