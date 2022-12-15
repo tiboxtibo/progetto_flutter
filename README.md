@@ -13,14 +13,6 @@ Ricorda di avviare prima:
 3) Emulatore android
 4) Infine avviamo il main del progetto flutter
 
-# Ricorda
-Gli url su windosow:
-    final urlUtente = "http://10.0.2.2:8080/EsServlet_war_exploded/UtenteServlet";
-
-Gli url su mac:
-    final urlUtente = "http://localhost:8080/EsServlet_war_exploded/UtenteServlet";
-(se utilizziamo emulatore di sistema IOS)
-
 # Spiegazione progetto
 
 Abbiamo creato un applicazione flutter collegandoci al server Tomcat e richiedendo i dati al 
@@ -109,7 +101,14 @@ Requisiti specifici per l’interfaccia utente Android:
     L’interfaccia Mobile comunica col server del progetto TWEB, 1 server condiviso tra 2 client . La comunicazione col lato Server avviene tramite il formato JSON,
     NON e’ necessario rifare la pagina di registrazione anche per Android
 
+# Ricorda
 
+Gli url su windosow:
+    final urlUtente = "http://10.0.2.2:8080/EsServlet_war_exploded/UtenteServlet";
+
+Gli url su mac:
+    final urlUtente = "http://localhost:8080/EsServlet_war_exploded/UtenteServlet";
+(se utilizziamo emulatore di sistema IOS)
 
 
 
