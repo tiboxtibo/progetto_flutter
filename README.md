@@ -1,4 +1,6 @@
-Progetto IUM-tweb(12 CFU) -- Parte di Android
+Progetto IUM-tweb(12 CFU) - Parte di Android
+
+Il progetto è costituito anche da un'applicazione web: https://github.com/tiboxtibo/progetto_tweb
 
 # Autori
 Matteo Tiboldo 
