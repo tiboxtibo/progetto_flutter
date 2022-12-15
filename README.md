@@ -24,17 +24,21 @@ Gli url su mac:
 # Spiegazione progetto
 
 Abbiamo creato un applicazione flutter collegandoci al server Tomcat e richiedendo i dati al 
-database MySql tramite le Servlet Java del progetto "https://github.com/tiboxtibo/progetto_tweb", 
+database MySql tramite le Servlet Java del progetto https://github.com/tiboxtibo/progetto_tweb, 
 tale applicazione ci permette di eseguire il login come utente, amministratore o ospite
+
 ![img.png](img.png)
 
 Prenotare le lezioni che risultano disponibili
+
 ![img_1.png](img_1.png)
 
 e mediante l'accesso alla UserPage di cancellarle o di confermarle
+
 ![img_2.png](img_2.png)
 
 # Consegna progetto
+
 Progetti laboratorio IUM e IUM/TWEB
 
 Progetto di laboratorio – IUM+TWEB – 2022/23 (insegnamento da 12 CFU)
@@ -105,55 +109,7 @@ Requisiti specifici per l’interfaccia utente Android:
     L’interfaccia Mobile comunica col server del progetto TWEB, 1 server condiviso tra 2 client . La comunicazione col lato Server avviene tramite il formato JSON,
     NON e’ necessario rifare la pagina di registrazione anche per Android
 
-Progetto per il linguaggio python:
-Si puo’ realizzare a scelta uno dei seguenti 2 progetti:
 
-Progetto 1:
-
-1)  dato il seguente file su Moodle/sez Python:  “elenco parole italiane per progetto esame” costruire una struttura dati di accesso a tutte le parole.
-2) l’utente sceglie due parole a caso, che possono essere gia’ presenti nel dizionario oppure nuove,
-3) il sistema trova tutte le parole che sono alfabeticamente vicine, in base a un insieme di regole ad es :
-   R!: aggiungo/tolgo una lettera : pro->poro->porro (sia agli estremi che in mezzo)
-   R2:  anagramma            :   torta     -> trota  
-   R3:  sostituire una lettera           :   torta     -> torto  
-   ……………………
-   Il sistema ripete le operazioni e creare dei cammini che collegano le due parole, A questo punto, date due parole possiamo calcolare una loro distanza.
-   Ad esempio nel primo caso
-   ‘pro’ e ‘porro’ sono collegate da 2 R1
-   torta e trota da R2
-   trota e torto da R2+ R3
-   ……
-
-Ogni regola puo’ avere un peso diverso a vostra completa discrezione, es aggiungere /togliere all’inizio/fondo costa meno che in mezzo, l’anagramma di due lettere vicine costa meno. Potete sdoppiare le regole (ad es aggiungo in mezzo o agli estremi)
-Si puo’ immaginare quindi di trovare una distanza minima, come l’insieme di regole meno costose che trasformano una parola in un’altra.   
-nel seguente esempio, potremmo dire  che due cammini sono equivalenti:
-
-casa casta costa costo cosmo
-casa cosa coma como cosmo
-
-in quanto si applicano R1 + 3R3 oppure 3R3+R1
-
-Ovviamente il cammino deve contenere SOLO parole presenti nel dizionario
-Non essendo un corso di algoritmi, potete usare qualunque algoritmo di qualunque complessita'.
-Non esistono vincoli aggiuntivi.
-Lo schema di base deve funzionare per un insieme N di regole arbitrario.
-Ad occhio il programma dovrebbe essere rapido se cercate due parole molto vicine.
-Se sono distanti potete opzionalmente introdurre euristiche, ad esempio
-se vedete che a forza di applicare regole si generano troppe sequenze, potete stabilire un numero massimo di regole da applicare dopo cui fermarsi.
-
-Se il progetto e’ svolto in gruppo, scrivere una GUI (ad es con tkinter) per inserire i dati e rappresentare tramite un disegno le sequenze di transizioni che trasformano la parola. Il disegno puo’ essere realizzato tramite qualunque libreria grafica a vostra scelta
-si possono adottare euristiche, ad es se hanno lunghezze diverse potrei privilegiare la aggiunta,
-
-Sono benvenute, anche se non richieste, funzionalita’ aggiuntive ottimizzazioni etc
-
-Se opzionalmente intendete usare librerie esterne per la gestione di grafi, questi sono degli esempi:
-
-https://igraph.org/python/
-https://networkx.org/
-https://graph-tool.skewed.de/
-
-Progetto 2:
-    realizzare una interfaccia grafica in Python per le ripetizioni, funzionalmente simile a quella del APP Android, quindi visualizzare catalogo, prenotare ripetizione, etc. L’unico ruolo e’ l’utente normale, Non servono le pagine di login/registrazione
 
 
 
